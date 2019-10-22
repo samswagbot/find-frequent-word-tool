@@ -23,7 +23,7 @@ Consider how many appearances of a word there needs to be in order to say someth
         // 4. show total score for scores above 50%
         // 5. general clean up, try and turn into a class 
         // 6. write up rely
-        // 7. dependency
+        // 7. dependency, do i need to npm i -g live-server
         // do you wanna get rid of actual quotes?
         // should I only grab questions?
 
@@ -38,16 +38,16 @@ Consider how many appearances of a word there needs to be in order to say someth
                     "text": "how are you doing?",
                     "percent_correct": 0.6551724137931034
                 }, 
-                {
-                    "text": "Which of the following BEST describes why raising the minimum wage may harm small businesses?",
-                    "percent_correct": 0.5932203389830508
-                }, {
-                    "text": "Read the sentences below: <blockquote>Women serve in the Army, Marines, Air Force and Navy. But many jobs have been off-limits to women.</blockquote> <blockquote>The Air Force said she had not really served in combat. They would not let her have a leadership role. </blockquote>Which of the following BEST explains the main idea of the section \"Ban Hurts Careers\"?",
-	                "percent_correct": 0.3040473840078973
-                }, {
-	"text": "Which statement BEST describes Pope Benedict\u2019s position on modern issues?",
-	"percent_correct": 0.44545454545454544
-}, 
+                // {
+                //     "text": "Which of the following BEST describes why raising the minimum wage may harm small businesses?",
+                //     "percent_correct": 0.5932203389830508
+                // }, {
+                //     "text": "Read the sentences below: <blockquote>Women serve in the Army, Marines, Air Force and Navy. But many jobs have been off-limits to women.</blockquote> <blockquote>The Air Force said she had not really served in combat. They would not let her have a leadership role. </blockquote>Which of the following BEST explains the main idea of the section \"Ban Hurts Careers\"?",
+	            //     "percent_correct": 0.3040473840078973
+                // }, {
+// 	"text": "Which statement BEST describes Pope Benedict\u2019s position on modern issues?",
+// 	"percent_correct": 0.44545454545454544
+// }, 
 
                 ];
                 // studentData.filter(scores => scores.percent_correct < .5);
@@ -64,35 +64,31 @@ Consider how many appearances of a word there needs to be in order to say someth
                 console.log('santizedWords',sanitizedWords)
              
              
-                var dictionary = {
-                    phraseArr: [],
-                    temp: [],
-                    word: {},
-                };
-                
+                var dictionary = {};
                 var tempPhrase = [];
                 var phraseCounter = 1;
-                var  phraseWord, i, j;
+                var word,phraseWord, i, j;
                 var k = 1;
                 var sortedDictionary = [];
+                var phraseArr = [];
                 var phrases;
                 var mostFrequentWord, mostFrequentPhrase;
 
                 for(i in sanitizedWords) {
                    const sentence = sanitizedWords[i]
                    for (j in sentence) {
-                       console.log(word)
-                        dictionary.word = sentence[j] 
+                        word = sentence[j] 
                         dictionary[word] = dictionary[word] || 0; //count every word
                         dictionary[word]++;
                         //omits counting the first index
                         if(j !== word[0]){ 
-                            dictionary.temp.push(word) //start phrase counting from first word
-                            dictionary.phraseArr[dictionary.temp] = dictionary.temp[word] || 0;
-                            dictionary.phraseArr[dictionary.temp]++;
-                        }            
+                            phraseArr.push(word) //start phrase counting from first word
+                            dictionary[phraseArr] = dictionary[word] || 0;
+                            dictionary[phraseArr]++;
+                        } 
+                        console.log('++',dictionary)           
                    }
-                    dictionary.phraseArr = [];
+                    phraseArr = [];
                     
                     for(k; k < sentence.length; k++) {
                         phraseCounter = k;
@@ -107,7 +103,8 @@ Consider how many appearances of a word there needs to be in order to say someth
                             }
                         }
                         tempPhrase = [];
-                    } 
+                    }
+                    console.log('sdfs',dictionary)   
                 } 
                 
                 //sort words and phrases by occurence in an array
@@ -141,11 +138,11 @@ Consider how many appearances of a word there needs to be in order to say someth
                     return element[0].search(regex)
                 })
 
-                mostFrequentWord = flattenedArr.find((element) => {
-                     if (element[0].indexOf(',')){
-                         return element[0]
-                    }
-                })
+                // mostFrequentWord = flattenedArr.find((element) => {
+                //      if (element[0].indexOf(',')){
+                //          return element[0]
+                //     }
+                // })
                      
                 console.log(`The most frequent word used is ${mostFrequentWord}`)
                 console.log(`The most frequent phrase used is ${mostFrequentPhrase}`)
