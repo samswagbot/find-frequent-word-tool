@@ -10,8 +10,6 @@ Consider how many appearances of a word there needs to be in order to say someth
         // 3. write up rely -- tie
         // 4. remove package.json, unsure if I need it
         // 5. make sure you can spin up en
-        v
-
 const fs = require('fs');
 const studentData = JSON.parse(fs.readFileSync('student-data.json', 'utf8'));
 
