@@ -7,9 +7,8 @@ Consider how many appearances of a word there needs to be in order to say someth
         */
         // TODO
         // 2. general clean up put into functions
-        // 3. write up rely -- tie
-        // 4. remove package.json, unsure if I need it
-        // 5. make sure you can spin up en
+        // 3. write up rely -- tie, as long as node is installed, if not provide instructions
+      
 const fs = require('fs');
 const studentData = JSON.parse(fs.readFileSync('student-data.json', 'utf8'));
 
@@ -21,7 +20,7 @@ var tempPhrase = [],
     sortedDictionaryPhrases = [],
     sortedDictionaryWords = [],
     sanitizedWords = [],
-    filteredScores = [];
+    scores = [];
 
 var phraseCounter = 1;
 var k = 0;
@@ -30,34 +29,31 @@ var word,
     phraseWord, 
     i,
     j, 
-    scores, 
     blockquotePosition,
-    mostFrequentWord, 
-    mostFrequentPhrase;
-
-
+    mostFrequentPassingWord, 
+    mostFrequentPassingPhrase,
+    mostFrequentFailingWord, 
+    mostFrequentFailingPhrase;
 
     //students who scored less than 50% on tests
-    filteredScores[0] = studentData.filter(failingScores => failingScores.percent_correct < .5);
-
+    scores.push(studentData.filter(failingScores => failingScores.percent_correct < .5));
     //students who scored greater than 50% on tests
-    filteredScores[1] = studentData.filter(passingScores => passingScores.percent_correct > .5);
-    console.log(filteredScores)
-for(var x = 0; x < studentData.length; x++){
-
+    scores.push(studentData.filter(failingScores => failingScores.percent_correct > .5));
+for(var x = 0; x < 2; x++){
+    scores = scores[x]
     //santize words
-for (var i = 0; i < filteredPoorScores.length; i++) { 
+for (var i = 0; i < scores.length; i++) { 
     //text exist before a question
-    if(filteredPoorScores[i].text.includes("</blockquote>")){
-        blockquotePosition = filteredPoorScores[i].text.lastIndexOf("</blockquote>");
-        sanitizedWords[i] = filteredPoorScores[i].text
-            .slice(blockquotePosition, filteredPoorScores[i].text.length)
+    if(scores[i].text.includes("</blockquote>")){
+        blockquotePosition = scores[i].text.lastIndexOf("</blockquote>");
+        sanitizedWords[i] = scores[i].text
+            .slice(blockquotePosition, scores[i].text.length)
             .toLowerCase()
             .replace( /(<([^>]+)>)/ig, '') //removes blockquotes
             .replace(/[\.,-?\/#!$%\^&\*;:{}=\-_`~()""]/g,"")
             .split(" ");  
     } else {
-    sanitizedWords[i] = filteredPoorScores[i].text
+    sanitizedWords[i] = scores[i].text
         .toLowerCase()
         .replace( /(<([^>]+)>)/ig, '') //removes blockquotes
         .replace(/[\.,-?\/#!$%\^&\*;:{}=\-_`~()""]/g,"")
@@ -103,7 +99,7 @@ sortedDictionaryWords = Object.keys(dictionaryWords)
     .map(key => {return [(key), dictionaryWords[key]]})
     .sort((a, b) => {return b[1] - a[1]});
 
-console.log(sortedDictionaryWords)
+// console.log(sortedDictionaryWords)
 
 //omitting articles and less important words
  switch(sortedDictionaryWords[0][0]){
@@ -118,13 +114,35 @@ console.log(sortedDictionaryWords)
     case 'of': 
         sortedDictionaryWords.shift();                 
  }
+    //if scores are failing
+    if(x == 0){
+        mostFrequentFailingPhrase = sortedDictionaryPhrases[0][0];
+        mostFrequentFailingWord = sortedDictionaryWords[0][0];
+        console.log(`The most frequent word used on poor scores ${mostFrequentFailingWord}`)
+        console.log(`The most frequent phrase used on poor scores ${mostFrequentFailingPhrase}`)
+    }
 
-mostFrequentPhrase = sortedDictionaryPhrases[0][0];
-mostFrequentWord = sortedDictionaryWords[0][0];
-     
-console.log(`The most frequent word used on poor scores ${mostFrequentWord}`)
-console.log(`The most frequent phrase used on poor scores ${mostFrequentPhrase}`)
-
-console.log(`The most frequent word used on passing scores ${mostFrequentWord}`)
-console.log(`The most frequent phrase used on passing scores ${mostFrequentPhrase}`)
+    //if scores are passing
+    if(x == 1) {
+        mostFrequentPassingPhrase = sortedDictionaryPhrases[0][0];
+        mostFrequentPassingWord = sortedDictionaryWords[0][0];
+        console.log(`The most frequent word used on passing scores ${mostFrequentPassingWord}`)
+        console.log(`The most frequent phrase used on passing scores ${mostFrequentPassingPhrase}`)
+    }
 }
+
+
+// var tie = [];
+// for(var i = 0; i > sortedDictionaryWords.length; i++) {
+//         tie.push(sortedDictionaryWords[i])
+//     if(sortedDictionaryPhrases[0][1] < sortedDictionaryWords[i][1]){
+//         break;
+//     }
+// }
+
+// console.log(tie)
+ 
+
+
+
+
