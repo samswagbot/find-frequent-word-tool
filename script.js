@@ -1,6 +1,7 @@
 const fs = require('fs');
 const studentData = JSON.parse(fs.readFileSync('student-data.json', 'utf8'));
 
+console.log(studentData)
 
 //Variable declarations
 var dictionaryWords = {}, 
@@ -118,7 +119,7 @@ var word, 
     iterateOverSantizedWords()
 
 
-    const sortPhrasesAndWords = () => {
+
         sortedDictionaryPhrases = Object.keys(dictionaryPhrases)
             .map(key => {return [(key), dictionaryPhrases[key]]})
             .sort((a, b) => {return b[1] - a[1]});
@@ -127,8 +128,7 @@ var word, 
         sortedDictionaryWords = Object.keys(dictionaryWords)
             .map(key => {return [(key), dictionaryWords[key]]})
             .sort((a, b) => {return b[1] - a[1]});
-    };
-    sortPhrasesAndWords();
+  
 
 
     const omittArticles = () => {
