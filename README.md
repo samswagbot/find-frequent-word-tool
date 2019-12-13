@@ -12,7 +12,7 @@ cd find-frequent-word-tool/
 ```
 
 ``` 
-node script 
+node script.js 
 ```
 
 The most frequent phrases and words will print to the console.
