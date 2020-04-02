@@ -1,7 +1,8 @@
-# find-frequent-word-tool
-A program that finds the most frequent word or phrase based on test score of student using Javascript.
+### Frequent Word Tool
 
-## Instructions
+A program that finds the most frequent word or phrase based on students test scores.
+
+## Installation
 
 ``` 
 git clone https://github.com/samswagbot/find-frequent-word-tool.git 
@@ -15,4 +16,6 @@ cd find-frequent-word-tool/
 node script.js 
 ```
 
-The most frequent phrases and words will print to the console.
+## Built With
+* ES6/Javascript
+* node.js
