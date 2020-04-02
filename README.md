@@ -1,4 +1,4 @@
-## Frequent Word Tool
+# Frequent Word Tool
 
 A program that finds the most frequent word or phrase based on students test scores.
 
@@ -15,6 +15,7 @@ cd find-frequent-word-tool/
 ``` 
 node script.js 
 ```
+The result will print to the console.
 
 ## Built With
 * ES6/Javascript
